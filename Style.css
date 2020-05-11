@@ -39,7 +39,31 @@
   margin-top: 0px;
 }
 
+.ScrollButton {
+    position: relative;
+    bottom: 10px;
+    background-color: #00008B;
+    border: 2px solid #FF8C00;
+    color: #FF8C00;
+    padding: 5px 75px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 22px;
+    cursor: pointer;
+}
+
 #LandRankingBox {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    width: 1800px;
+    height: auto;
+    position: relative;
+    display: grid;
+    grid-template-columns: 600px 600px 600px;
+}
+
+#LandRankingBox2 {
     margin-left: auto;
     margin-right: auto;
     margin-top: 5px;

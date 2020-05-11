@@ -344,3 +344,13 @@ function ChartMaker(Array, WhichChart) {
   var L = document.getElementById("lds-hourglass");
   L.style.display = "none";
 }
+
+function ScrollDownTOP() {
+    var elmnt = document.getElementById("ScrollButtonBOTTOM");
+    elmnt.scrollIntoView({behavior: "smooth"}); 
+}
+
+function ScrollDownBOTTOM() {
+    var elmnt = document.getElementById("ScrollButtonTOP");
+    elmnt.scrollIntoView({behavior: "smooth"}); 
+}
