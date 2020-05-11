@@ -193,29 +193,78 @@ async function ProfileNamer(Array) {
     console.log(Array);
     ListMaker(Array);
 }
-/*
+
 function ListMaker(Array) {
 
-  var MysticList = Array;
-  var RareMysticList = [];
+    var TotalList = Array;
+    var OriginList = [];
+    var RareOriginList = [];
+    var MEOList = [];
+    var RareMEOList = [];
+    var MEOIIList = [];
+    var RareMEOIIList = [];
 
-  for(i = 0; i < Array.length; i++) {
-    if(Array[i].RareClassAxie != 0) {
-      RareMysticList.push({EthOwner : Array[i].EthOwner, Origins : Array[i].RareClassAxie});
+    var RareMysticList = [];
+
+    //Array Key is called Origins every time because of the chartmaker function !!!
+    for(i = 0; i < Array.length; i++) {
+        if(Array[i].Origins != 0) {
+            OriginList.push({EthOwner : Array[i].EthOwner, Origins : Array[i].Origins});
+        }
+        if(Array[i].RareOrigins != 0) {
+            RareOriginList.push({EthOwner : Array[i].EthOwner, Origins : Array[i].RareOrigins});
+        }
+        if(Array[i].MEOs != 0) {
+            MEOList.push({EthOwner : Array[i].EthOwner, Origins : Array[i].MEOs});
+        }
+        if(Array[i].RareMEOs != 0) {
+            RareMEOList.push({EthOwner : Array[i].EthOwner, Origins : Array[i].RareMEOs});
+        }
+        if(Array[i].MEOIIs != 0) {
+            MEOIIList.push({EthOwner : Array[i].EthOwner, Origins : Array[i].MEOIIs});
+        }
+        if(Array[i].RareMEOIIs != 0) {
+            RareMEOIIList.push({EthOwner : Array[i].EthOwner, Origins : Array[i].RareMEOIIs});
+        }
     }
-  }
-  RareMysticList.sort((a,b) => b.Origins - a.Origins);
 
-  document.getElementById("MList").innerHTML = '<ol class="LL">' + MysticList.map(function (genesis) {
-    return '<li>' + String(genesis["Origins"]) + " Origins owned by " + String(genesis["EthOwner"]) + '</li>';
-  }).join('') + '</ol>';
+    OriginList.sort((a,b) => b.Origins - a.Origins);
+    RareOriginList.sort((a,b) => b.Origins - a.Origins);
+    MEOList.sort((a,b) => b.Origins - a.Origins);
+    RareMEOList.sort((a,b) => b.Origins - a.Origins);
+    MEOIIList.sort((a,b) => b.Origins - a.Origins);
+    RareMEOIIList.sort((a,b) => b.Origins - a.Origins);
 
-  document.getElementById("RList").innerHTML = '<ol class="LL">' + RareMysticList.map(function (genesis) {
-    return '<li>' + String(genesis["Origins"]) + " Rare Origins owned by " + String(genesis["EthOwner"]) + '</li>';
-  }).join('') + '</ol>';
+    document.getElementById("OList").innerHTML = '<ol class="LL">' + OriginList.map(function (genesis) {
+        return '<li>' + String(genesis["Origins"]) + " Origins owned by " + String(genesis["EthOwner"]) + '</li>';
+    }).join('') + '</ol>';
 
-  ChartMaker(MysticList, "MChart");
-  ChartMaker(RareMysticList, "RChart");
+    document.getElementById("MIList").innerHTML = '<ol class="LL">' + MEOList.map(function (genesis) {
+        return '<li>' + String(genesis["Origins"]) + " Rare Origins owned by " + String(genesis["EthOwner"]) + '</li>';
+    }).join('') + '</ol>';
+
+    document.getElementById("MIIList").innerHTML = '<ol class="LL">' + MEOIIList.map(function (genesis) {
+        return '<li>' + String(genesis["Origins"]) + " Rare Origins owned by " + String(genesis["EthOwner"]) + '</li>';
+    }).join('') + '</ol>';
+
+    document.getElementById("ROList").innerHTML = '<ol class="LL">' + RareOriginList.map(function (genesis) {
+        return '<li>' + String(genesis["Origins"]) + " Origins owned by " + String(genesis["EthOwner"]) + '</li>';
+    }).join('') + '</ol>';
+
+    document.getElementById("RMIList").innerHTML = '<ol class="LL">' + RareMEOList.map(function (genesis) {
+        return '<li>' + String(genesis["Origins"]) + " Rare Origins owned by " + String(genesis["EthOwner"]) + '</li>';
+    }).join('') + '</ol>';
+
+    document.getElementById("RMIIList").innerHTML = '<ol class="LL">' + RareMEOIIList.map(function (genesis) {
+        return '<li>' + String(genesis["Origins"]) + " Rare Origins owned by " + String(genesis["EthOwner"]) + '</li>';
+    }).join('') + '</ol>';
+
+    ChartMaker(OriginList, "OChart");
+    ChartMaker(MEOList, "MIChart");
+    ChartMaker(MEOIIList, "MIIChart");
+    ChartMaker(RareOriginList, "ROChart");
+    ChartMaker(RareMEOList, "RMIChart");
+    ChartMaker(RareMEOIIList, "RMIIChart");
 }
 
 function ChartMaker(Array, WhichChart) {
@@ -295,4 +344,3 @@ function ChartMaker(Array, WhichChart) {
   var L = document.getElementById("lds-hourglass");
   L.style.display = "none";
 }
-*/
