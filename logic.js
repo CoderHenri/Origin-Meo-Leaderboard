@@ -240,23 +240,23 @@ function ListMaker(Array) {
     }).join('') + '</ol>';
 
     document.getElementById("MIList").innerHTML = '<ol class="LL">' + MEOList.map(function (genesis) {
-        return '<li>' + String(genesis["Origins"]) + " Rare Origins owned by " + String(genesis["EthOwner"]) + '</li>';
+        return '<li>' + String(genesis["Origins"]) + " MEO I's owned by " + String(genesis["EthOwner"]) + '</li>';
     }).join('') + '</ol>';
 
     document.getElementById("MIIList").innerHTML = '<ol class="LL">' + MEOIIList.map(function (genesis) {
-        return '<li>' + String(genesis["Origins"]) + " Rare Origins owned by " + String(genesis["EthOwner"]) + '</li>';
+        return '<li>' + String(genesis["Origins"]) + " MEO II's owned by " + String(genesis["EthOwner"]) + '</li>';
     }).join('') + '</ol>';
 
     document.getElementById("ROList").innerHTML = '<ol class="LL">' + RareOriginList.map(function (genesis) {
-        return '<li>' + String(genesis["Origins"]) + " Origins owned by " + String(genesis["EthOwner"]) + '</li>';
+        return '<li>' + String(genesis["Origins"]) + " Rare Origins owned by " + String(genesis["EthOwner"]) + '</li>';
     }).join('') + '</ol>';
 
     document.getElementById("RMIList").innerHTML = '<ol class="LL">' + RareMEOList.map(function (genesis) {
-        return '<li>' + String(genesis["Origins"]) + " Rare Origins owned by " + String(genesis["EthOwner"]) + '</li>';
+        return '<li>' + String(genesis["Origins"]) + " Rare MEO I's owned by " + String(genesis["EthOwner"]) + '</li>';
     }).join('') + '</ol>';
 
     document.getElementById("RMIIList").innerHTML = '<ol class="LL">' + RareMEOIIList.map(function (genesis) {
-        return '<li>' + String(genesis["Origins"]) + " Rare Origins owned by " + String(genesis["EthOwner"]) + '</li>';
+        return '<li>' + String(genesis["Origins"]) + " Rare MEO II'S owned by " + String(genesis["EthOwner"]) + '</li>';
     }).join('') + '</ol>';
 
     ChartMaker(OriginList, "OChart");
