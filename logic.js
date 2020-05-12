@@ -336,7 +336,7 @@ function ChartMaker(Array, WhichChart) {
         labels: {
           fontColor: '#FFFFFF',
           boxWidth: 15,
-          fontSize: 15
+          fontSize: 13
         }
       }
     }
