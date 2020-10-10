@@ -110,9 +110,9 @@ function ArrayConverter(Array) {
         RareClassMeoII = 0;
         if(Array[i].title == "Origin") {
             Origin = 1;
-        } else if (Array[i].title == "MEO") {
+        } else if (Array[i].title == "MEO Corp") {
             Meo = 1;
-        } else if (Array[i].title == "MEO II") {
+        } else if (Array[i].title == "MEO Corp II") {
             MeoII = 1;
         }
         if(Array[i].class == "Reptile" || Array[i].class == "Bug" || Array[i].class == "Bird") {
@@ -239,6 +239,9 @@ console.log(Array);
         }
     }
 
+    console.log(RareOriginList);
+    console.log(MEOList);
+
     OriginList.sort((a,b) => b.Origins - a.Origins);
     RareOriginList.sort((a,b) => b.Origins - a.Origins);
     MEOList.sort((a,b) => b.Origins - a.Origins);
@@ -292,6 +295,12 @@ function ChartMaker(Array, WhichChart) {
 
   var ctx = document.getElementById(WhichChart);
 
+  var TotalLand = 0;
+
+  for(m=0; Array.length > m; m++){
+    TotalLand = TotalLand + Array[m].Origins;
+  }
+
   console.log(Array);
 
   var LandMenge = [Array[0].Origins, Array[1].Origins, Array[2].Origins, Array[3].Origins, Array[4].Origins, Array[5].Origins, Array[6].Origins, Array[7].Origins, Array[8].Origins, RestMenge];
@@ -332,6 +341,13 @@ function ChartMaker(Array, WhichChart) {
       }]
     },
     options: {
+      title: {
+        display: true,
+        position: 'top',
+        fontSize: 17,
+        fontFamily: 'Arial',
+        text: "Total Amount: " + TotalLand
+      },
       tooltips: {
         displayColors: false,
         callbacks: {
