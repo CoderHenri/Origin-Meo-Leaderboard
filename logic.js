@@ -26,56 +26,67 @@ function AsyncTextReader() {
 
 async function GetTaggedAxies() {
 
+  var NumberStart = 0;
+  var NumberEnd = 100;
+
+  var TempArray = [];
   var TaggedArray = [];
 
   var url = "https://axieinfinity.com/graphql-server/graphql"
 
-  await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-    },
-    
-    body: JSON.stringify({
-      operationName:"GetAxieBriefList",
-      variables:{
-        "from":0,
-        "size":6400,
-        "sort":"IdAsc",
-        "auctionType":"All",
-        "owner":null,
-        "region":null,
-        "criteria":{
-            "parts":null,
-            "bodyShapes":null,
-            "classes":null,
-            "stages":null,
-            "numMystic":null,
-            "pureness":null,
-            "title":["Origin","MEO Corp","MEO Corp II"],
-            "breedable":null,
-            "breedCount":null,
-            "hp":[],"skill":[],"speed":[],"morale":[]
-        }
+  while(NumberStart < 6360){
+    await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
       },
-      query:"query GetAxieBriefList($auctionType: AxieAuctionType, $region: String, $criteria: AxieCriteria, $from: Int, $sort: SortBy, $size: Int, $owner: String) {\n  axies(auctionType: $auctionType, region: $region, criteria: $criteria, from: $from, sort: $sort, size: $size, owner: $owner) {\n    total\n    results {\n      ...AxieBrief\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment AxieBrief on Axie {\n  owner\n  class\n  title\n  __typename\n}\n"})
-  })
-    
-  .then(function(response) { 
-    return response.json(); 
-  })
+      
+      body: JSON.stringify({
+        operationName:"GetAxieBriefList",
+        variables:{
+          "from":NumberStart,
+          "size":NumberEnd,
+          "sort":"IdAsc",
+          "auctionType":"All",
+          "owner":null,
+          "region":null,
+          "criteria":{
+              "parts":null,
+              "bodyShapes":null,
+              "classes":null,
+              "stages":null,
+              "numMystic":null,
+              "pureness":null,
+              "title":["Origin","MEO Corp","MEO Corp II"],
+              "breedCount":null,
+              "hp":[],"skill":[],"speed":[],"morale":[]
+          }
+        },
+        query:"query GetAxieBriefList($auctionType: AuctionType, $criteria: AxieSearchCriteria, $from: Int, $sort: SortBy, $size: Int, $owner: String) {\n  axies(auctionType: $auctionType, criteria: $criteria, from: $from, sort: $sort, size: $size, owner: $owner) {\n    total\n    results {\n      ...AxieBrief\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment AxieBrief on Axie {\n  owner\n  class\n  title\n  __typename\n}\n"})
+    })
+      
+    .then(function(response) { 
+      return response.json(); 
+    })
 
-  .then(function(data) {
-    TaggedArray = data;
-    console.log(TaggedArray);
-    ArrayConverter(TaggedArray);
-  });
+    .then(function(data) {
+      TempArray = data.data.axies.results;
+      TaggedArray = TaggedArray.concat(TempArray);
+      NumberStart = NumberEnd;
+      NumberEnd = NumberEnd + 100;
+    });
+  }
+
+  console.log(TaggedArray);
+  ArrayConverter(TaggedArray);
 }
 
 function ArrayConverter(Array) {
 
-    Array.data.axies.results.sort((a,b) => b.owner - a.owner);
+    Array.sort((a,b) => b.owner - a.owner);
+
+    console.log(Array);
 
     var NonNestedTaggedArray = [];
     var UniqueOwnerArray = [];
@@ -90,21 +101,21 @@ function ArrayConverter(Array) {
 
 
 
-    for(i = 0; i < Array.data.axies.results.length; i++) {
+    for(i = 0; i < Array.length; i++) {
         Origin = 0;
         Meo = 0;
         MeoII = 0;
         RareClassOrigin = 0;
         RareClassMeo = 0;
         RareClassMeoII = 0;
-        if(Array.data.axies.results[i].title == "Origin") {
+        if(Array[i].title == "Origin") {
             Origin = 1;
-        } else if (Array.data.axies.results[i].title == "MEO") {
+        } else if (Array[i].title == "MEO") {
             Meo = 1;
-        } else if (Array.data.axies.results[i].title == "MEO II") {
+        } else if (Array[i].title == "MEO II") {
             MeoII = 1;
         }
-        if(Array.data.axies.results[i].class == "Reptile" || Array.data.axies.results[i].class == "Bug" || Array.data.axies.results[i].class == "Bird") {
+        if(Array[i].class == "Reptile" || Array[i].class == "Bug" || Array[i].class == "Bird") {
         RareClass = 1;
         } else {
         RareClass = 0;
@@ -116,7 +127,7 @@ function ArrayConverter(Array) {
         } else if(RareClass == 1 && MeoII == 1) {
             RareClassMeoII = 1;
         }
-        NonNestedTaggedArray.push({EthOwner : Array.data.axies.results[i].owner, Origins : Origin, RareOrigins : RareClassOrigin, MEOs : Meo, RareMEOs : RareClassMeo, MEOIIs : MeoII, RareMEOIIs : RareClassMeoII});
+        NonNestedTaggedArray.push({EthOwner : Array[i].owner, Origins : Origin, RareOrigins : RareClassOrigin, MEOs : Meo, RareMEOs : RareClassMeo, MEOIIs : MeoII, RareMEOIIs : RareClassMeoII});
     }
 
     for(i = 0; i < NonNestedTaggedArray.length; i++) {
@@ -195,7 +206,7 @@ async function ProfileNamer(Array) {
 }
 
 function ListMaker(Array) {
-
+console.log(Array);
     var TotalList = Array;
     var OriginList = [];
     var RareOriginList = [];
@@ -280,6 +291,8 @@ function ChartMaker(Array, WhichChart) {
   }
 
   var ctx = document.getElementById(WhichChart);
+
+  console.log(Array);
 
   var LandMenge = [Array[0].Origins, Array[1].Origins, Array[2].Origins, Array[3].Origins, Array[4].Origins, Array[5].Origins, Array[6].Origins, Array[7].Origins, Array[8].Origins, RestMenge];
   var LandBesitzer = [Array[0].EthOwner, Array[1].EthOwner, Array[2].EthOwner, Array[3].EthOwner, Array[4].EthOwner, Array[5].EthOwner, Array[6].EthOwner, Array[7].EthOwner, Array[8].EthOwner, "All other Players"];
